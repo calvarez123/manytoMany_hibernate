@@ -4,6 +4,7 @@ import java.io.File;
 
 import java.util.HashSet;
 import java.util.Set;
+import org.hibernate.Hibernate;
 
 public class Main {
 
@@ -185,6 +186,7 @@ llibresAut4.add(lib14);
 Manager.updateAutor(aut4.getAutorId(), aut4.getNom());
 
 
+
 // LListar dades
 System.out.println(Manager.collectionToString(Biblioteca.class, Manager.listCollection(Biblioteca.class)));
 System.out.println(Manager.collectionToString(Llibre.class, Manager.listCollection(Llibre.class)));
@@ -193,4 +195,11 @@ System.out.println(Manager.collectionToString(Persona.class, Manager.listCollect
 
 
 Manager.close();
-   }}
+   }
+
+
+
+
+}
+
+   

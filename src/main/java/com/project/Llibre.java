@@ -1,14 +1,24 @@
 package com.project;
-
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "llibre")
+@Table(name = "Llibre",
+        uniqueConstraints = {@UniqueConstraint(columnNames = "id")})
 public class Llibre {
+
+    public Llibre() {}
+
+
+    public Llibre (String nom, String editorial ) {
+        this.nom = nom;
+        this.editorial = editorial;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "llibreId")
+    @Column(name = "id", unique = true, nullable = false)
     private Long llibreId;
 
     @Column(name = "nom")
@@ -18,23 +28,19 @@ public class Llibre {
     private String editorial;
 
     @ManyToMany
-    @JoinColumn(name = "id_autor")
-    private Autor autor;
-
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "llibres")
-    private List<Biblioteca> biblioteques;
+    private Set<Autor> autors;
 
 
     @ManyToMany(mappedBy = "llibres")
-    private List<Persona> persones;
+    private Set<Biblioteca> biblioteques;
 
 
-    public Llibre() {
-        //TODO Auto-generated constructor stub
-    }
+    @ManyToMany(mappedBy = "llibres")
+    private Set<Persona> persones;
+
 
     public Long getLlibreId() {
-        return this.llibreId;
+        return llibreId;
     }
 
     public void setLlibreId(Long llibreId) {
@@ -42,7 +48,7 @@ public class Llibre {
     }
 
     public String getNom() {
-        return this.nom;
+        return nom;
     }
 
     public void setNom(String nom) {
@@ -50,49 +56,42 @@ public class Llibre {
     }
 
     public String getEditorial() {
-        return this.editorial;
+        return editorial;
     }
 
     public void setEditorial(String editorial) {
         this.editorial = editorial;
     }
 
-    public Autor getAutor() {
-        return this.autor;
+    public Set<Autor> getAutors() {
+        return autors;
     }
 
-    public void setAutor(Autor autor) {
-        this.autor = autor;
+    public void setAutors(Set<Autor> Autors) {
+        this.autors = Autors;
     }
 
-    public List<Biblioteca> getBiblioteques() {
-        return this.biblioteques;
+    public Set<Biblioteca> getBiblioteques() {
+        return biblioteques;
     }
 
-    public void setBiblioteques(List<Biblioteca> biblioteques) {
+    public void setBiblioteques(Set<Biblioteca> biblioteques) {
         this.biblioteques = biblioteques;
     }
 
-    public List<Persona> getPersones() {
-        return this.persones;
+    public Set<Persona> getPersones() {
+        return persones;
     }
 
-    public void setPersones(List<Persona> persones) {
+    public void setPersones(Set<Persona> persones) {
         this.persones = persones;
     }
 
 
     @Override
     public String toString() {
-        return "{" +
-            " llibreId='" + getLlibreId() + "'" +
-            ", nom='" + getNom() + "'" +
-            ", editorial='" + getEditorial() + "'" +
-            ", autor='" + getAutor() + "'" +
-            ", biblioteques='" + getBiblioteques() + "'" +
-            ", persones='" + getPersones() + "'" +
-            "}";
+        return String.format("| %-8s | %-20s | %-20s |",
+                llibreId, nom, editorial);
     }
 
-    
 }

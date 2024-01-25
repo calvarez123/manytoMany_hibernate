@@ -73,9 +73,8 @@ public class Biblioteca {
 
     @Override
     public String toString() {
-        return "{" +
-            " bibliotecaId='" + getBibliotecaId() + "'" +
-            ", nom='" + getNom();
+        return String.format("| %-15s | %-20s |",
+                bibliotecaId, nom );
     }
     
 

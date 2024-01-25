@@ -2,44 +2,44 @@ package com.project;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "persona")
 public class Persona {
+
+
+    public Persona() {}
+
+
+    public Persona (String dni, String nom,String telefon ) {
+        this.nom = nom;
+        this.dni = dni;
+        this.telefon = telefon;
+    }
+
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "personaId")
+    @Column(name = "id", unique = true, nullable = false)
     private Long personaId;
 
     @Column(name = "dni")
     private String dni;
-
     @Column(name = "nom")
     private String nom;
-
     @Column(name = "telefon")
     private String telefon;
 
     @ManyToMany
     @JoinTable(
-        name = "prestecs",
-        joinColumns = @JoinColumn(name = "personaId"),
-        inverseJoinColumns = @JoinColumn(name = "llibreId")
-    )
-    private List<Llibre> llibres;
-
-    public Persona() {}
-
-    public Persona(Long personaId, String dni, String nom, String telefon, List<Llibre> llibres) {
-        this.personaId = personaId;
-        this.dni = dni;
-        this.nom = nom;
-        this.telefon = telefon;
-        this.llibres = llibres;
-    }
+            name = "persona_llibre",
+            joinColumns = @JoinColumn(name = "personaId"),
+            inverseJoinColumns = @JoinColumn(name = "llibreId"))
+    private Set<Llibre> llibres;
 
     public Long getPersonaId() {
-        return this.personaId;
+        return personaId;
     }
 
     public void setPersonaId(Long personaId) {
@@ -47,7 +47,7 @@ public class Persona {
     }
 
     public String getDni() {
-        return this.dni;
+        return dni;
     }
 
     public void setDni(String dni) {
@@ -55,7 +55,7 @@ public class Persona {
     }
 
     public String getNom() {
-        return this.nom;
+        return nom;
     }
 
     public void setNom(String nom) {
@@ -63,19 +63,26 @@ public class Persona {
     }
 
     public String getTelefon() {
-        return this.telefon;
+        return telefon;
     }
 
     public void setTelefon(String telefon) {
         this.telefon = telefon;
     }
 
-    public List<Llibre> getLlibres() {
-        return this.llibres;
+    public Set<Llibre> getLlibres() {
+        return llibres;
     }
 
-    public void setLlibres(List<Llibre> llibres) {
+    public void setLlibres(Set<Llibre> llibres) {
         this.llibres = llibres;
     }
+
+    @Override
+    public String toString() {
+        return String.format("| %-10s | %-15s | %-15s | %-15s |",
+                personaId, dni, nom, telefon);
+    }
     
+
 }

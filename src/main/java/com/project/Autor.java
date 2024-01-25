@@ -2,24 +2,35 @@ package com.project;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "autor")
 public class Autor {
+
+    public Autor() {}
+
+
+    public Autor (String nom) {
+        this.nom = nom;
+    }
+
+
     @Id
+    @Column(name = "id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "autorId")
     private Long autorId;
+
 
     @Column(name = "nom")
     private String nom;
 
-    @ManyToMany(mappedBy = "autor", cascade = CascadeType.ALL)
-    private List<Llibre> llibres;
+
+    @ManyToMany(mappedBy = "autors")
+    private Set<Llibre> llibres;
 
 
     public Long getAutorId() {
-        return this.autorId;
+        return autorId;
     }
 
     public void setAutorId(Long autorId) {
@@ -27,29 +38,25 @@ public class Autor {
     }
 
     public String getNom() {
-        return this.nom;
+        return nom;
     }
 
     public void setNom(String nom) {
         this.nom = nom;
     }
 
-    public List<Llibre> getLlibres() {
-        return this.llibres;
+    public Set<Llibre> getLlibres() {
+        return llibres;
     }
 
-    public void setLlibres(List<Llibre> llibres) {
+    public void setLlibres(Set<Llibre> llibres) {
         this.llibres = llibres;
     }
 
     @Override
     public String toString() {
-        return "{" +
-            " autorId='" + getAutorId() + "'" +
-            ", nom='" + getNom() + "'" +
-            ", llibres='" + getLlibres() + "'" +
-            "}";
+        return String.format("| %-10s | %-15s|",
+                autorId, nom);
     }
 
-    
 }
